@@ -2,3 +2,4 @@
 
 - name: Node.js | Make sure the nodejs dependencies are installed
   apt: pkg=python-software-properties
+       update_cache=yes
