@@ -1,0 +1,5 @@
+- hosts: nodejs-hosts
+  sudo: yes
+  roles:
+    - role: nodejs
+
