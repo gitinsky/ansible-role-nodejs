@@ -1,7 +1,19 @@
 # file: roles/nodejs/tasks/install_package.yml
 
-- name: Node.js | Add the nodejs chris-lea repository
-  apt_repository: repo=ppa:chris-lea/node.js
+- name: Install and configure the required dependencies
+  apt: name={{ item }}
+  with_items:
+      - apt-transport-https
+
+- name: add apt key for nodesource.com
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+
+- name: Node.js | Add the nodesource.com repository
+  apt_repository: repo={{ item }} update_cache=yes
+  with_items:
+      - deb https://deb.nodesource.com/node_0.12 {{ ansible_distribution_release }} main
+      - deb-src https://deb.nodesource.com/node_0.12 {{ ansible_distribution_release }} main
+      
 
 - name: Node.js | Make sure latest nodejs is installed
   apt: name=nodejs state=latest update_cache=yes
